@@ -8,7 +8,7 @@ namespace EasyHreg.Backend.Controllers;
 [ApiController]
 [Route("api/[controller]")]
 public class MutationsController(
-    // IDatabaseService databaseService, 
+    IDatabaseService databaseService, 
     IDocumentService documentService,
     PdfService pdfService) : ControllerBase
 {
@@ -24,35 +24,35 @@ public class MutationsController(
                     <table>
                         <tr>
                             <td>Nachname:</td>
-                            <td>XXX</td>
+                            <td>{person.LastName}</td>
                         </tr>
                         <tr>
                             <td>Ledigname:</td>
-                            <td>XXX</td>
+                            <td>{person.UnmarriedName}</td>
                         </tr>
                         <tr>
                             <td>Vorname(n):</td>
-                            <td>XXX</td>
+                            <td>{person.FirstName}</td>
                         </tr>
                         <tr>
                             <td>Geschlecht:</td>
-                            <td>XXX</td>
+                            <td>{person.Gender}</td>
                         </tr>
                         <tr>
                             <td>Heimatort/Staatsangehörigkeit:</td>
-                            <td>XXX</td>
+                            <td>{person.Nationality}</td>
                         </tr>
                         <tr>
                             <td>Geburtsdatum:</td>
-                            <td>XXX</td>
+                            <td>{person.Birthdate}</td>
                         </tr>
                         <tr>
                             <td>Wohnsitz:</td>
-                            <td>XXX</td>
+                            <td>{person.Residence}</td>
                         </tr>
                         <tr>
                             <td>Art, Nummer, Datum und Ausgabebehörde des amtlichen Ausweises:</td>
-                            <td>XXX</td>
+                            <td>{person.OfficialId}</td>
                         </tr>
                 </body>
             </html>";
@@ -61,21 +61,7 @@ public class MutationsController(
     [HttpPost]
     public async Task<ActionResult> Post(Mutation mutation)
     {
-        // var approvingPersons = await databaseService.GetApprovePersons(mutation);
-        var approvingPersons = new List<Person>
-        {
-            new() {
-                Id = 1,
-                Email = "bla@tt.com",
-                Role = "VR"
-            },
-            new() {
-                Id = 2,
-                Email = "blub@tt.com",
-                Role = "VR"
-            }
-        };
-            
+        var approvingPersons = await databaseService.GetApprovePersons(mutation);
 
         foreach(var person in approvingPersons)
         {
@@ -83,7 +69,7 @@ public class MutationsController(
             // In reality this would be a more complex process.
             var mockedDocument = CreateSignedDocument(person);
             var pdf = await pdfService.CreatePdfFromHtml(mockedDocument);
-            await documentService.SaveDocument(pdf, "XXX.pdf");
+            await documentService.SaveDocument(pdf, $"{person.FirstName}_{person.LastName}.pdf");
         }
 
         return Ok();
