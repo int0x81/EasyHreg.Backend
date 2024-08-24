@@ -6,14 +6,16 @@ namespace EasyHreg.Backend.Services.Implementations;
 public class PdfService
 {
     private readonly SemaphoreSlim _semaphore = new(5, 5);
-    private IBrowser _browser;
+    private readonly IBrowser _browser;
 
     public PdfService()
     {
+        var chromeDriverPath = Environment.GetEnvironmentVariable("CHROME_DRIVER_PATH");
+        // var chromeDriverPath = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
         _browser ??= Puppeteer.LaunchAsync(new LaunchOptions
         {
             Headless = true,
-            ExecutablePath = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+            ExecutablePath = chromeDriverPath,
             Args =
             [
                 "--no-sandbox",

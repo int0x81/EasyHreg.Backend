@@ -5,7 +5,7 @@ namespace EasyHreg.Backend.Services
 {
     public class ExcelService : IDatabaseService
     {
-        private readonly static string filePath = "../../Data/Persons.xlsx";
+        private readonly static string filePath = "Persons.xlsx";
 
         public Task<IEnumerable<Person>> GetApprovePersons(Mutation mutation)
         {
