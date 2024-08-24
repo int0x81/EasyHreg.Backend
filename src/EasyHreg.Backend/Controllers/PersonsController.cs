@@ -16,4 +16,17 @@ public class PersonsController(IDatabaseService databaseService) : ControllerBas
 
         return Ok(persons);
     }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Person>> GetById(int id)
+    {
+        var person = await databaseService.GetPersonById(id);
+
+        if (person == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(person);
+    }
 }

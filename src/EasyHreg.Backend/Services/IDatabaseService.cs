@@ -11,6 +11,11 @@ public interface IDatabaseService
     /// Gets all persons from the database.
     /// </summary>
     Task<IEnumerable<Person>> GetPersons();
+
+    /// <summary>
+    /// Gets person by id.
+    /// </summary>
+    Task<Person?> GetPersonById(int id);
     
     /// <summary>
     /// Gets all persons that have to approve a mutation.

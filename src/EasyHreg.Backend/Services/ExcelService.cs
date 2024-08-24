@@ -14,6 +14,13 @@ namespace EasyHreg.Backend.Services
             return Task.FromResult(persons.Where(p => p.Id != mutation.PersonId));
         }
 
+        public async Task<Person?> GetPersonById(int id)
+        {
+            var persons = await GetPersons();
+
+            return persons.FirstOrDefault(p => p.Id == id);
+        }
+
         public Task<IEnumerable<Person>> GetPersons()
         {
             using (var workbook = new XLWorkbook(filePath))
