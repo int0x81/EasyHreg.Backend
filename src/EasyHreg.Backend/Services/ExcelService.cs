@@ -9,7 +9,9 @@ namespace EasyHreg.Backend.Services
 
         public Task<IEnumerable<Person>> GetApprovePersons(Mutation mutation)
         {
-            throw new NotImplementedException();
+            var persons = GetPersons().Result;
+
+            return Task.FromResult(persons.Where(p => p.Id != mutation.PersonId));
         }
 
         public Task<IEnumerable<Person>> GetPersons()
