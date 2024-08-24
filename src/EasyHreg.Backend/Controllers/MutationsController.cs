@@ -1,4 +1,3 @@
-using DinkToPdf;
 using EasyHreg.Backend.Models;
 using EasyHreg.Backend.Services;
 using EasyHreg.Backend.Services.Implementations;

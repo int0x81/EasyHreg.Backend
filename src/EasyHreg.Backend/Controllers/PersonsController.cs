@@ -1,15 +1,19 @@
 using EasyHreg.Backend.Models;
+using EasyHreg.Backend.Services;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EasyHreg.Backend.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class PersonsController : ControllerBase
-{
+public class PersonsController(IDatabaseService databaseService) : ControllerBase
+{    
     [HttpGet]
-    public Task<ActionResult<IEnumerable<Person>>> GetAll()
+    public async Task<ActionResult<IEnumerable<Person>>> GetAll()
     {
-        throw new NotImplementedException();
+        var persons = await databaseService.GetPersons();
+
+        return Ok(persons);
     }
 }
