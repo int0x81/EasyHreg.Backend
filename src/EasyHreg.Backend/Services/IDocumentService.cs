@@ -13,5 +13,5 @@ public interface IDocumentService
     /// <summary>
     /// Saves a document in the file store.
     /// </summary>
-    Task SaveDocument(byte[] file);
+    Task SaveDocument(byte[] file, string fileName);
 }
