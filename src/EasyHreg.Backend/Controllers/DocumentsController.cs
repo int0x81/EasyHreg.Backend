@@ -1,14 +1,16 @@
+using EasyHreg.Backend.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EasyHreg.Backend.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class DocumentsController : ControllerBase
+public class DocumentsController(IDocumentService documentService) : ControllerBase
 {
     [HttpGet]
-    public Task<ActionResult<IEnumerable<byte[]>>> GetAll()
+    public async Task<ActionResult<IEnumerable<byte[]>>> GetAll()
     {
-        throw new NotImplementedException();
+        var documents = await documentService.GetSignedDocuments();
+        return Ok(documents);
     }
 }
