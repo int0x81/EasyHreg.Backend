@@ -1,5 +1,6 @@
 using EasyHreg.Backend.Models;
 using EasyHreg.Backend.Services;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EasyHreg.Backend.Controllers;
@@ -9,10 +10,10 @@ namespace EasyHreg.Backend.Controllers;
 public class PersonsController(IDatabaseService databaseService) : ControllerBase
 {    
     [HttpGet]
-    public Task<ActionResult<IEnumerable<Person>>> GetAll()
+    public async Task<ActionResult<IEnumerable<Person>>> GetAll()
     {
-        var persons = databaseService.GetPersons();
+        var persons = await databaseService.GetPersons();
 
-        return Task.FromResult<ActionResult<IEnumerable<Person>>>(Ok(persons));
+        return Ok(persons);
     }
 }
